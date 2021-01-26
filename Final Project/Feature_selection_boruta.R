@@ -1,0 +1,20 @@
+rm(list = ls())
+setwd('/Users/aviratbelekar/Desktop/KDD_project')
+dataset<-read.csv('attrition_data.csv')
+dataset<-dataset[,-c(14)]
+#install.packages("Boruta")
+library(Boruta)
+library(mlbench)
+library(caret)
+library(randomForest)
+str(dataset)
+
+set.seed(111)
+boruta<-Boruta(STATUS~.,data = dataset, doTrace = 2, maxRuns = 30)
+print(boruta)
+plot(boruta,las = 2)
+plotImpHistory(boruta)
+bor<-TentativeRoughFix(boruta)
+print(bor)
+attStats(boruta)
+
